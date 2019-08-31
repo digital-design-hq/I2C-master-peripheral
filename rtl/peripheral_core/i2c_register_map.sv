@@ -6,20 +6,24 @@
 //       1      [7:0]       data in            data       read only     For FIFOless use
 
 //       2      [31:0]      read length        config     read/write    (# of bytes to read before NACK-STOP condition)
+//       3      [31:0]      write length       config     read/write    (# of bytes to write before STOP)
 //       3      [15:0]      clock divider      config     read/write    
 //       4      [7:0]       Interrupt enables  config     read/write    (1 for enabled: same bit map as status reg)
 //       4      [8]         FIFO enable        config     read/write    (1 to use FIFO - or when DMA is used)
-//       4      [9]         transmission type  config     read/write    (0 for write only, 1 for write-read)
-//       4      [10]        repeated start     config     read/write    (1 for a repeated start on write-read operations)
+//       4      [9]         transmission type  config     read/write    (0 for write, 1 for write-read OR read in FIFOless mode)
+//       4      [10]        START              config     read/write    (when set to 1 the transaction starts, gets cleared)
+//       4      [11]        repeated start     config     read/write    (1 for a repeated start on write-read operations)
 
-//       5      [0]         Operation finished status     read/write    (gets set to 1, user clears)
+//       5      [0]         STOP               status     read/write    (gets set to 1, user clears OR user sets in FIFOless mode)
 //       5      [1]         Write FIFO full    status     read/write    (gets set to 1, user clears)
 //       5      [2]         Write FIFO empty   status     read/write    (gets set to 1, user clears)
 //       5      [3]         Read FIFO full     status     read/write    (gets set to 1, user clears)
-//       5      [4]         ACK                status     read/write    (gets set to 1 if FIFO enable=0, user clears)
-//       5      [5]         NACK               status     read/write    (gets set to 1 if FIFO enable=0, user clears)
+//       5      [4]         ACK                status     read/write    (gets set to 1 if FIFO enable=0, user clears OR user sets in FIFOless read mode)
+//       5      [5]         NACK               status     read/write    (gets set to 1 if FIFO enable=0, user clears OR user sets in FIFOless read mode)
 //       5      [6]         Bus status         status     read only     (1 for available, 0 for in use)
 //       5      [7]         Arbitration loss   status     read only     (1 for arbitration loss)
+//       6      [31:0]      Bytes read         status     read only     
+//       7      [31:0]      Bytes written      status     read only
 
 
 module peripheral_register_map(
