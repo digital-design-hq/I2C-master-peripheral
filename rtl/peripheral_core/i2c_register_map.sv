@@ -2,8 +2,8 @@
 
 // register map
 // address //   bits    //  registers       // type   //  access type  // value meaning
-//       0      [7:0]       data out           data       read/write    For FIFOless use
-//       1      [7:0]       data in            data       read only     For FIFOless use
+//       0      [7:0]       data out           data       read/write    For FIFOless use (to write on bus)
+//       1      [7:0]       data in            data       read only     For FIFOless use (Read from bus)
 
 //       2      [31:0]      read length        config     read/write    (# of bytes to read before NACK-STOP condition)
 //       3      [31:0]      write length       config     read/write    (# of bytes to write before STOP)
