@@ -2,27 +2,24 @@
 
 // register map
 // address //   bits    //  registers       // type   //  access type  // value meaning
-//       0      [7:0]       data out           data       read/write    For FIFO or DMAless use
-//       1      [7:0]       data in            data       read only     For FIFO or DMAless use
-//       2      [31:0]      DMA read start     data       read/write    Address to get data to send in DMA mode
-//       3      [31:0]      DMA read stop      data       read/write    -should these be in the DMA module?
-//       4      [31:0]      DMA write start    data       read/write    Address to store recieved data in DMA mode
-//       5      [31:0]      DMA write stop     data       read/write    -if they are in the DMA module, should they have addresses at the end?
+//       0      [7:0]       data out           data       read/write    For FIFOless use
+//       1      [7:0]       data in            data       read only     For FIFOless use
 
-//       6      [15:0]      clock divider      config     read/write    
-//       7      [5:0]       Interrupt enables  config     read/write    (1 for enabled: same bit map as status reg)
-//       7      [6]         FIFO enable        config     read/write    (1 to use FIFO - takes precedence over DMA)
-//       7      [7]         DMA  enable        config     read/write    (1 to use DMA)
-//       7      [8]         transmission type  config     read/write    (0 for write only, 1 for write-read)
+//       2      [31:0]      read length        config     read/write    (# of bytes to read before NACK-STOP condition)
+//       3      [15:0]      clock divider      config     read/write    
+//       4      [7:0]       Interrupt enables  config     read/write    (1 for enabled: same bit map as status reg)
+//       4      [8]         FIFO enable        config     read/write    (1 to use FIFO - or when DMA is used)
+//       4      [9]         transmission type  config     read/write    (0 for write only, 1 for write-read)
+//       4      [10]        repeated start     config     read/write    (1 for a repeated start on write-read operations)
 
-//       8      [0]         Operation finished status     read/write    (gets set to 1, user clears)
-//       8      [1]         Write FIFO full    status     read/write    (gets set to 1, user clears)
-//       8      [2]         Write FIFO empty   status     read/write    (gets set to 1, user clears)
-//       8      [3]         Read FIFO full     status     read/write    (gets set to 1, user clears)
-//       8      [4]         ACK                status     read/write    (gets set to 1 if FIFO/DMA enable=0, user clears)
-//       9      [5]         NACK               status     read/write    (gets set to 1 if FIFO/DMA enable=0, user clears)
-//       8      [6]         Bus status         status     read only     (1 for available, 0 for in use)
-//       8      [7]         Arbitration loss   status     read only     (1 for arbitration loss)
+//       5      [0]         Operation finished status     read/write    (gets set to 1, user clears)
+//       5      [1]         Write FIFO full    status     read/write    (gets set to 1, user clears)
+//       5      [2]         Write FIFO empty   status     read/write    (gets set to 1, user clears)
+//       5      [3]         Read FIFO full     status     read/write    (gets set to 1, user clears)
+//       5      [4]         ACK                status     read/write    (gets set to 1 if FIFO enable=0, user clears)
+//       5      [5]         NACK               status     read/write    (gets set to 1 if FIFO enable=0, user clears)
+//       5      [6]         Bus status         status     read only     (1 for available, 0 for in use)
+//       5      [7]         Arbitration loss   status     read only     (1 for arbitration loss)
 
 
 module peripheral_register_map(
