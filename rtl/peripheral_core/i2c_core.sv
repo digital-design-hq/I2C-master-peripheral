@@ -8,12 +8,37 @@ module peripheral_core(
 
 
     // device registers (state that can be seen by a bus master)
-    logic  [31:0]  count;  // count value
-    logic          en;     // count enable
-    logic          dir;    // count direction
-    logic          ire;    // count interrupt request enable
-    logic          lt_1k;  // count less than 1000
+    logic  [7:0]  data_out;     // Byte to write to bus
+    logic  [7:0]  data_in;      // Byte read from bus
+    
+    logic  [31:0] read_length;  // # of bytes to read in FIFO mode
+    logic  [31:0] write_length; // # of bytes to write in FIFO mode
+    logic  [15:0] clk_divider;  // To set SCL frequency relative to peripheral clock
+    logic         stop_ire;     // Interrupt enable for STOP condition
+    logic         din_full_ire; // Interrupt enable for write FIFO full
+    logic         din_empty_ire;// Interrupt enable for write FIFO empty AND bytes_written<write_length
+    logic         dout_full_ire;// Interrupt enable for read FIFO full
+    logic         ack_ire;      // Interrupt enable for slave ACK condition
+    logic         nack_ire;     // Interrupt enable for slave NACK condition
+    logic         bus_ire;      // Interrupt enable for bus available
+    logic         arb_ire;      // Interrupt enable for arbitration loss
+    logic         fifo_enable;  // Set to 1 to use FIFO 
+    logic         packet_type;  // 0 for write, 1 for write-read
+    logic         start;        // User sets to 1 to begin transaction
+    logic         master_ACK;   // User sets to 1 to send ACK bit
+    logic         master_NACK;  // User sets to 1 to send NACK bit
+    logic         sr_enable;    // Enable repeated start: for slaves that use repeated start for reads
 
+    logic         stop;         // Set to 1 at end of transaction - user writeable
+    logic         din_full;     // Write FIFO full 
+    logic         din_empty;    // Write FIFO empty AND bytes_written<write_length
+    logic         dout_full;    // Read FIFO full 
+    logic         slave_ACK;    // Set to 1 on ACK condition from slave 
+    logic         slave_NACK;   // Set to 1 on NACK condition from slave
+    logic         bus_available;// 1 when bus is available
+    logic         arb_loss;     // Set to 1 after arbitration loss
+    logic  [31:0] bytes_read;
+    logic  [31:0] bytes_written;
 
     // hidden registers
     logic          irq;    // interrupt request
