@@ -9,7 +9,7 @@ interface i2c_native_register_interface;
 
 
     // device register inputs
-    logic  [7:0]   data_in_in;
+    logic  [7:0]   data_out_in; //data out is data to be written on bus
 
     logic  [31:0]  read_length_in;
     logic  [31:0]  write_length_in;
@@ -37,8 +37,8 @@ interface i2c_native_register_interface;
     logic          slave_NACK_in;
 
     // device register outputs
-    logic  [7:0]   data_in_out;
     logic  [7:0]   data_out_out;
+    logic  [7:0]   data_in_out;
 
     logic  [31:0]  read_length_out;
     logic  [31:0]  write_length_out;
@@ -81,7 +81,7 @@ interface i2c_native_register_interface;
     modport in (
         input   clk,
         input   reset,
-        input   data_in_in,
+        input   data_out_in,
         input   read_length_in,
         input   write_length_in,
         input   clk_divider_in,
@@ -105,9 +105,15 @@ interface i2c_native_register_interface;
         input   dout_full_in,
         input   slave_ACK_in,
         input   slave_NACK_in,
+        input   data_out_we,
+        input   read_length_we,
+        input   write_length_we,
+        input   clk_divider_we,
+        input   config_we,
+        input   status_we,
         
-        output  data_in_out,
         output  data_out_out,
+        output  data_in_out,
         output  read_length_out,
         output  write_length_out,
         output  clk_divider_out,
@@ -142,7 +148,7 @@ interface i2c_native_register_interface;
     modport out (
         output   clk,
         output   reset,
-        output   data_in_in,
+        output   data_out_in,
         output   read_length_in,
         output   write_length_in,
         output   clk_divider_in,
@@ -166,9 +172,15 @@ interface i2c_native_register_interface;
         output   dout_full_in,
         output   slave_ACK_in,
         output   slave_NACK_in,
+        output   data_out_we,
+        output   read_length_we,
+        output   write_length_we,
+        output   clk_divider_we,
+        output   config_we,
+        output   status_we,
         
-        input  data_in_out,
         input  data_out_out,
+        input  data_in_out,
         input  read_length_out,
         input  write_length_out,
         input  clk_divider_out,

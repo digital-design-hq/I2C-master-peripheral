@@ -1,9 +1,9 @@
 
 
-interface peripheral_register_interface;
+interface i2c_register_interface;
 
     // this must be set on a per core basis
-    parameter REGS         = 1;
+    parameter REGS         = 9;
     parameter POWEROF2REGS = $clog2(REGS) ** 2;
     parameter ADDRESSWIDTH = $clog2(REGS);
 
