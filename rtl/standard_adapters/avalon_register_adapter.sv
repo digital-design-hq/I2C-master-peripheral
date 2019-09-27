@@ -1,7 +1,7 @@
 
 
 module avalon_register_adapter
-    #(parameter REGS           = 1,
+    #(parameter REGS           = 9,
       parameter LATENCY        = 1,
       parameter ADDRESSLATENCY = (LATENCY == 1) ? 1 : LATENCY - 1,
       parameter DATAOUTLATENCY = (LATENCY == 1) ? 0 : 1,
@@ -15,7 +15,7 @@ module avalon_register_adapter
     input                              logic  [31:0]              data_in,
     output                             logic                      read_valid,
     output                             logic  [31:0]              data_out,
-    peripheral_register_interface.out                             reg_io
+    i2c_register_interface.out                                    reg_io
     );
 
 
