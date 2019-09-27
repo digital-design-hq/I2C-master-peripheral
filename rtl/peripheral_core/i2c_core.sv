@@ -1,7 +1,7 @@
 
 
-module peripheral_core(
-    peripheral_native_register_interface.in  reg_io,
+module i2c_core(
+    i2c_native_register_interface.in  reg_io,
     peripheral_memory_interface.in           mem_io,
     output  logic                            irq_out
     );
@@ -33,8 +33,8 @@ module peripheral_core(
     logic         din_full;     // Write FIFO full 
     logic         din_empty;    // Write FIFO empty AND bytes_written<write_length
     logic         dout_full;    // Read FIFO full 
-    logic         slave_ACK;    // Set to 1 on ACK condition from slave 
-    logic         slave_NACK;   // Set to 1 on NACK condition from slave
+    logic         slave_ACK;    // Is set to 1 on ACK condition from slave 
+    logic         slave_NACK;   // Is set to 1 on NACK condition from slave
     logic         bus_available;// 1 when bus is available
     logic         arb_loss;     // Set to 1 after arbitration loss
     logic  [31:0] bytes_read;
@@ -43,6 +43,8 @@ module peripheral_core(
     // hidden registers
     logic          irq;    // interrupt request
 
+
+    //below is old code from peripheral template
 
     // other internal logic signals
     logic  [31:0]  count_next;
